@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && mkdir dist && shx cp config.yml dist/config.yml"
+,
     "preview": "astro preview"
   },
   "repository": {
@@ -25,6 +26,7 @@
     "astro": "^5.5.5",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
+    "shx": "^0.3.4",
     "tailwindcss": "^4.0.17"
   },
   "dependencies": {

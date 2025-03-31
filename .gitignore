@@ -1,0 +1,10 @@
+node_modules/
+.astro/
+.env
+.env.*
+*.log
+*.tmp
+.DS_Store
+dist/
+.cache/
+.netlify/
