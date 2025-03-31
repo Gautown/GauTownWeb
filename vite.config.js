@@ -8,20 +8,19 @@ export default defineConfig({
       '/.netlify/identity': {
         target: 'https://api.netlify.com',
         changeOrigin: true,
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
         pathRewrite: {
           '^/.netlify/identity': '/.netlify/identity'
         }
       },
       '/netlify-identity-widget.js': {
-        target: 'https://unpkg.com/netlify-identity-widget@latest',
+        target: 'https://unpkg.com/netlify-identity-widget@^1.9.2',
         changeOrigin: true,
-        rewrite: (path) => '/dist/netlify-identity-widget.js',
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        }
+        rewrite: (path) => '/dist/netlify-identity-widget.js'
+      },
+      '/styles': {
+        target: 'http://localhost:4321',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/styles/, '/src/styles')
       },
       '/.netlify/git': {
         target: 'https://api.netlify.com',
