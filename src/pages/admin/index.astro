@@ -10,8 +10,8 @@ import Nav from '../../components/Nav.astro';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>管理后台</title>
-  <link rel="stylesheet" href="/src/styles/global.css" />
-  <script src="/netlify-identity-widget.js" is:inline></script>
+  <link rel="stylesheet" href="/styles/global.css" />
+  <script is:inline src="/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
       netlifyIdentity.on('init', user => {

@@ -16,8 +16,12 @@ export default defineConfig({
         }
       },
       '/netlify-identity-widget.js': {
-        target: 'https://unpkg.com/netlify-identity-widget@latest/dist',
-        changeOrigin: true
+        target: 'https://unpkg.com/netlify-identity-widget@latest',
+        changeOrigin: true,
+        rewrite: (path) => '/dist/netlify-identity-widget.js',
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
       },
       '/.netlify/git': {
         target: 'https://api.netlify.com',
