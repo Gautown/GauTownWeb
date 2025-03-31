@@ -1,0 +1,74 @@
+---
+/**
+ * 管理后台页面
+ * 包含CMS初始化所需的容器元素
+ */
+import Nav from '../../components/Nav.astro';
+---
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <script src="/netlify-identity-widget.js" is:inline></script>
+  <script>
+    if (window.netlifyIdentity) {
+      netlifyIdentity.on('init', user => {
+        if (!user) {
+          netlifyIdentity.on('login', () => {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+</head>
+<body>
+  <Nav />
+  
+  <main>
+    <div id="cms">
+      <!-- CMS管理界面容器 -->
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          // 初始化Netlify Identity
+          if (typeof netlifyIdentity !== 'undefined') {
+            netlifyIdentity.init({
+              APIUrl: '/.netlify/identity'
+            });
+          } else {
+            console.error('Netlify Identity 未正确加载');
+          }
+
+          // 配置CMS初始化
+          netlifyIdentity.on('init', () => {
+            if (typeof CMS !== 'undefined') {
+              CMS.init({
+                config: {
+                  backend: {
+                    name: 'git-gateway',
+                    branch: 'main',
+                    identity_url: '/.netlify/identity',
+                    gateway_url: '/.netlify/git'
+                  },
+                  load_config_file: true,
+                  local_backend: true
+                }
+              });
+            } else {
+              console.error('CMS 未正确加载');
+            }
+          });
+          
+          // 监听登录事件
+          netlifyIdentity.on('login', () => {
+            document.location.reload();
+          });
+        });
+      </script>
+    </div>
+  </main>
+</body>
+</html>

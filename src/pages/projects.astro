@@ -1,0 +1,76 @@
+---
+// 作品展示页面
+import { getCollection } from 'astro:content';
+import Nav from '../components/Nav.astro';
+const models = await getCollection('models');
+---
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品展示</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+  <style>
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    
+    .project-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .project-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .project-content {
+      padding: 1rem;
+    }
+    
+    .project-title {
+      margin: 0 0 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    .project-description {
+      margin: 0;
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body>
+  <Nav />
+  
+  <main>
+    <h1>模型展示</h1>
+    <div class="projects-grid">
+      {models.map(model => (
+        <article class="project-card">
+          <img 
+            src={`/uploads/${model.data.image}`} 
+            alt={model.data.title}
+            class="project-image"
+          />
+          <div class="project-content">
+            <h2 class="project-title">{model.data.title}</h2>
+            <p class="project-description">{model.data.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+</body>
+</html>
