@@ -1,0 +1,29 @@
+{
+  "name": "gautownweb",
+  "version": "1.0.0",
+  "description": "这是一个静态网站系统\r 使用的是Astro+netlify CMS技术",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gautown/GauTownWeb.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Gautown/GauTownWeb/issues"
+  },
+  "homepage": "https://github.com/Gautown/GauTownWeb#readme",
+  "devDependencies": {
+    "astro": "^5.5.6"
+  },
+  "dependencies": {
+    "decap-cms-app": "^3.6.2"
+  }
+}

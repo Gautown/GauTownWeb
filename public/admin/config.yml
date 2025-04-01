@@ -1,0 +1,24 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+
+collections:
+  - name: "works"
+    label: "设计作品"
+    folder: "src/content/works"
+    create: true
+    fields:
+      - { name: "title", label: "标题", widget: "string" }
+      - { name: "cover", label: "封面图", widget: "image" }
+      - { name: "description", label: "描述", widget: "text" }
+
+  - name: "resources"
+    label: "设计资源"
+    folder: "src/content/resources"
+    create: true
+    fields:
+      - { name: "title", label: "资源标题", widget: "string" }
+      - { name: "file", label: "资源文件", widget: "file" }
+      - { name: "preview", label: "预览图", widget: "image" }

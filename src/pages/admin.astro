@@ -1,0 +1,35 @@
+---
+import CMS from 'decap-cms-app'
+
+// 客户端初始化Decap CMS
+if (typeof window !== 'undefined') {
+  CMS.init({
+    config: {
+      load_config_file: false,
+      backend: {
+        name: 'git-gateway',
+        branch: 'main',
+        repo: 'Gautown/GauTownWeb'
+      },
+      media_folder: 'public/uploads',
+      public_folder: '/uploads',
+      collections: require('../../public/admin/config.yml').collections
+    }
+  })
+}
+---
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>内容管理系统</title>
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </head>
+  <body>
+    <script is:inline>
+  if (typeof window !== 'undefined') {
+    CMS.registerPreviewStyle('/admin/config.yml');
+  }
+</script>
+  </body>
+</html>
