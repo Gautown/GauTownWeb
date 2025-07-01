@@ -1,0 +1,58 @@
+---
+const { activeLink } = Astro.props;
+---
+<nav class="main-nav">
+  <a href="/" class="nav-logo" name=”GauTownStudio“ ><img src="/favicon.svg" alt="GauTown Logo" class="logo-img"></a>
+  <button class="menu-toggle" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <div class="nav-links">
+    <a href="/" class={`nav-link ${activeLink === '/' ? 'active' : ''}`}>首页</a>
+    <a href="/projects" class={`nav-link ${activeLink === '/projects' ? 'active' : ''}`}>项目</a>
+    <a href="/scope" class={`nav-link ${activeLink === '/scope' ? 'active' : ''}`}>范围</a>
+    <a href="/resources" class={`nav-link ${activeLink === '/resources' ? 'active' : ''}`}>资源</a>
+    <a href="/blog" class={`nav-link ${activeLink === '/blog' ? 'active' : ''}`}>博客</a>
+    <a href="/about" class={`nav-link ${activeLink === '/about' ? 'active' : ''}`}>关于</a>
+    <a href="/contact" class={`nav-link ${activeLink === '/contact' ? 'active' : ''}`}>联系</a>
+    <a href="/blog" class="nav-link mobile-only">← 返回列表</a>
+  </div>
+</nav>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (navLinks && menuToggle) {
+          navLinks.classList.toggle('active');
+          menuToggle.classList.toggle('active');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (navLinks && menuToggle && !navLinks.contains(target) && !menuToggle.contains(target)) {
+          navLinks.classList.remove('active');
+          menuToggle.classList.remove('active');
+        }
+      });
+
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          if (navLinks && menuToggle) {
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+          }
+        });
+      });
+    }
+  });
+</script>

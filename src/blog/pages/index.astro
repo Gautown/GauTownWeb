@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+const blogPosts = await getCollection('blog', ({ data }: { data: CollectionEntry<'blog'>['data'] }) => {
+  return import.meta.env.PROD ? data.draft !== true : true;
+}).then((posts: CollectionEntry<'blog'>[]) => 
+  posts.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+    new Date(b.data.publish_date).getTime() - new Date(a.data.publish_date).getTime()
+  )
+);
+---
+<html lang="zh-CN">
+<head>
+  <title>技术博客 | GauTown</title>
+</head>
+<body>
+  <main class="container">
+    <h1>技术笔记</h1>
+    <div class="posts-list">
+      {blogPosts.map((post: { slug: any; data: { cover_image: string | null | undefined; title: unknown; publish_date: string | number | Date; description: unknown; }; }) => (
+        <article class="post-card">
+          <a href={`/blog/${post.slug}`}>
+            {post.data.cover_image && <img src={post.data.cover_image} alt={post.data.title as string} />}
+            <h2>{post.data.title}</h2>
+            <time datetime={new Date(post.data.publish_date).toISOString()}>{
+              new Date(post.data.publish_date).toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })
+            }</time>
+            <p>{post.data.description}</p>
+          </a>
+        </article>
+      ))}
+    </div>
+  </main>
+
+  <style>
+    .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    .posts-list { display: grid; gap: 2rem; }
+    .post-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+    .post-card:hover { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    .post-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 0.25rem; }
+    .post-card h2 { margin: 1rem 0 0.5rem; font-size: 1.25rem; }
+    .post-card time { color: #6b7280; font-size: 0.875rem; }
+    .post-card p { color: #374151; margin-top: 0.5rem; }
+  </style>
+</body>
+</html>

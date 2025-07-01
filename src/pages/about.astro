@@ -1,0 +1,51 @@
+---
+import BlogLayout from '../layouts/BlogLayout.astro';
+import { getCollection } from 'astro:content';
+
+const aboutEntries = await getCollection('about');
+const title = '关于我们';
+---
+<BlogLayout {title}>
+  <article class="prose container mx-auto">
+    {aboutEntries.length > 0 && (
+      <Fragment>
+        <div class="grid gap-8">
+          {/* 公司简介 */}
+          <section class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-semibold mb-4">公司简介</h2>
+            <p class="text-gray-600 leading-relaxed">{aboutEntries[0].data.introduction}</p>
+          </section>
+
+          {/* 设计哲学 */}
+          <section class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-semibold mb-4">{aboutEntries[0].data.philosophy.title}</h2>
+            <div class="text-gray-600 space-y-4" set:html={aboutEntries[0].data.philosophy.content} />
+          </section>
+
+          {/* 服务体系 */}
+          <section class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-semibold mb-4">服务体系</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+              {aboutEntries[0].data.services.map((service: {title: string, items: string[]}) => (
+                <div class="space-y-3">
+                  <h3 class="text-lg font-medium">{service.title}</h3>
+                  <ul class="list-disc pl-6 space-y-2 text-gray-600">
+                    {service.items.map((item: string) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 团队优势 */}
+          <section class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-semibold mb-4">{aboutEntries[0].data.team.title}</h2>
+            <div class="text-gray-600 leading-relaxed" set:html={aboutEntries[0].data.team.content} />
+          </section>
+        </div>
+      </Fragment>
+    )}
+  </article>
+</BlogLayout>

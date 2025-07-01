@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  url: string;
+}
+
+const { project } = Astro.props as Props;
+---
+
+<article class="project-card">
+  <h3>{project.data.title}</h3>
+  <p>{project.data.description}</p>
+  <div class="meta">
+    <a href={project.data.link} target="_blank">查看项目</a>
+    <div class="tags">
+      {project.data.tags.map((tag: string) => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+  </div>
+
+  <style>
+    .project-card {
+      border: 1px solid #eaeaea;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .tags {
+      margin-top: 1rem;
+    }
+    .tag {
+      display: inline-block;
+      background: #f3f3f3;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-right: 0.5rem;
+      font-size: 0.9em;
+    }
+  </style>
+</article>

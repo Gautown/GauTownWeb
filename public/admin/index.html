@@ -8,7 +8,23 @@
   </head>
   <body>
     <!-- Include the script that builds the page and powers Decap CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const loader = document.createElement('div');
+    loader.textContent = '正在加载CMS系统...';
+    document.body.appendChild(loader);
+
+    import('https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js')
+      .then(() => window.decapCMS = window.CMS)
+      .then(() => window.decapCMS.registerPreviewStyle('/styles/global.css'))
+      .then(() => {
+        loader.remove();
+      })
+      .catch(error => {
+        loader.textContent = 'CMS加载失败: ' + error.message;
+      });
+  });
+</script>
+    
   </body>
 </html>

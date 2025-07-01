@@ -5,6 +5,20 @@ backend:
 media_folder: "public/uploads"
 
 collections:
+  - name: "projects"
+    label: "项目案例"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "项目名称", widget: "string" }
+      - { name: "date", label: "日期", widget: "datetime" }
+      - { name: "cover", label: "封面图", widget: "image", media_library: { config: { multiple: false } } }
+      - { name: "tags", label: "技术标签", widget: "list", allow_add: true }
+      - { name: "client", label: "客户名称", widget: "string" }
+      - { name: "role", label: "担任角色", widget: "string" }
+      - { name: "period", label: "项目周期", widget: "string" }
+      - { name: "body", label: "项目详情", widget: "markdown" }
   - name: "works"
     label: "设计作品"
     folder: "src/content/works"
@@ -22,3 +36,13 @@ collections:
       - { name: "title", label: "资源标题", widget: "string" }
       - { name: "file", label: "资源文件", widget: "file" }
       - { name: "preview", label: "预览图", widget: "image" }
+
+  - name: "blog"
+    label: "博客文章"
+    folder: "src/content/blog/posts"
+    create: true
+    fields:
+      - { name: "title", label: "标题", widget: "string" }
+      - { name: "publish_date", label: "发布日期", widget: "datetime" }
+      - { name: "content", label: "内容", widget: "markdown" }
+      - { name: "cover_image", label: "封面图片", widget: "image" }

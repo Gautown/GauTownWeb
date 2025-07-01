@@ -1,0 +1,26 @@
+---
+import Navigation from '../components/Navigation.astro';
+const { title } = Astro.props;
+---
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>{title} | GauTown Studio</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+</head>
+<body>
+  <header class="blog-header">
+    <Navigation activeLink={Astro.url.pathname} />
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="blog-footer">
+    <p>© 2024 GauTown Studio</p>
+  </footer>
+
+  
+</body>
+</html>

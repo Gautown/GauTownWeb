@@ -21,9 +21,15 @@
   },
   "homepage": "https://github.com/Gautown/GauTownWeb#readme",
   "devDependencies": {
-    "astro": "^5.5.6"
+    "@types/js-yaml": "^4.0.9",
+    "astro": "^5.10.1"
   },
   "dependencies": {
-    "decap-cms-app": "^3.6.2"
+    "decap-cms-app": "^3.6.2",
+    "decap-cms-core": "^3.6.1",
+    "decap-cms-widget-markdown": "^3.3.0",
+    "js-yaml": "^4.1.0",
+    "slate-hyperscript": "^0.100.0",
+    "zod": "^3.24.2"
   }
 }

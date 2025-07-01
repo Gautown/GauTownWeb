@@ -1,35 +1,45 @@
----
-import CMS from 'decap-cms-app'
-
-// 客户端初始化Decap CMS
+// 修复 window.global 的定义
 if (typeof window !== 'undefined') {
-  CMS.init({
-    config: {
-      load_config_file: false,
-      backend: {
-        name: 'git-gateway',
-        branch: 'main',
-        repo: 'Gautown/GauTownWeb'
-      },
-      media_folder: 'public/uploads',
-      public_folder: '/uploads',
-      collections: require('../../public/admin/config.yml').collections
-    }
-  })
+  window.global = window.global || window;
 }
----
+
+// 正确导入所需依赖
+import type { InitOptions } from 'decap-cms-core';
+import CMS from 'decap-cms-app';
+import yaml from 'js-yaml';
 
 <html>
   <head>
     <meta charset="utf-8" />
     <title>内容管理系统</title>
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          const configResponse = await fetch('/admin/config.yml');
+          const configText = await configResponse.text();
+          
+          // 使用 yaml.load 解析配置
+          const config = yaml.load(configText);
+
+          CMS.init({
+            config: {
+              load_config_file: false,
+              backend: {
+                name: 'git-gateway',
+                branch: 'main',
+                repo: 'Gautown/GauTownWeb'
+              },
+              media_folder: 'public/uploads',
+              public_folder: '/uploads',
+              collections: config.collections
+            }
+          });
+        } catch (error) {
+          console.error('Error initializing CMS:', error);
+        }
+      });
+    </script>
   </head>
-  <body>
-    <script is:inline>
-  if (typeof window !== 'undefined') {
-    CMS.registerPreviewStyle('/admin/config.yml');
-  }
-</script>
-  </body>
+  <body></body>
 </html>
